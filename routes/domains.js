@@ -9,6 +9,30 @@ function domainsRouter(domainModel) {
     router.get('/domains', async (req, res) => {
         await GetDomains(domainModel, res);
     });
+    router.get('/master-ips', async (req, res) => {
+        await GetMasterIpsAverage(domainModel, res);
+    });
+    router.get('/master-ips-count', async (req, res) => {
+        await GetMasterIpsCount(domainModel, res);
+    });
+    router.get('/locations-avrage', async (req, res) => {
+        await GetLocationAvrage(domainModel, res);
+    });
+    router.get('/owner-avrage', async (req, res) => {
+        await GetOwnerAvrage(domainModel, res);
+    });
+    router.get('/expiring-domains', async (req, res) => {
+        await GetExpireingDomains(domainModel, res);
+    });
+    router.get('/recent-domains', async (req, res) => {
+        await GetRecentDomains(domainModel, res);
+    });
+    router.get('/locations', async (req, res) => {
+        await GetLocationCount(domainModel, res);
+    });
+    router.get('/owners', async (req, res) => {
+        await GetOwnersCount(domainModel, res);
+    });
 
     router.delete('/domains/delete/:id', async (req, res) => {
         await DeletById(req, domainModel, res);
@@ -39,6 +63,78 @@ async function GetDomains(domainModel, res) {
         res.json(domains);
     } catch (error) {
         console.error('Error fetching domains:', error);
+        res.status(500).json({message: 'Server error'});
+    }
+}
+async function GetMasterIpsAverage(domainModel, res) {
+    try {
+        const domains = await domainModel.getMasterIpAverage();
+        res.json(domains);
+    } catch (error) {
+        console.error('Error fetching domains:', error);
+        res.status(500).json({message: 'Server error'});
+    }
+}
+async function GetMasterIpsCount(domainModel, res) {
+    try {
+        const domains = await domainModel.getMasterIpCount();
+        res.json(domains);
+    } catch (error) {
+        console.error('Error fetching domains:', error);
+        res.status(500).json({message: 'Server error'});
+    }
+}
+async function GetExpireingDomains(domainModel, res) {
+    try {
+        const domains = await domainModel.getExpiringDomains();
+        res.json(domains);
+    } catch (error) {
+        console.error('Error fetching domains:', error);
+        res.status(500).json({message: 'Server error'});
+    }
+}
+async function GetRecentDomains(domainModel, res) {
+    try {
+        const domains = await domainModel.getRecentDomains();
+        res.json(domains);
+    } catch (error) {
+        console.error('Error fetching domains:', error);
+        res.status(500).json({message: 'Server error'});
+    }
+}
+async function GetLocationCount(domainModel, res) {
+    try {
+        const domains = await domainModel.getLocationCount();
+        res.json(domains);
+    } catch (error) {
+        console.error('Error fetching Locations:', error);
+        res.status(500).json({message: 'Server error'});
+    }
+}
+async function GetLocationAvrage(domainModel, res) {
+    try {
+        const domains = await domainModel.getLocationAvrage();
+        res.json(domains);
+    } catch (error) {
+        console.error('Error fetching Locations:', error);
+        res.status(500).json({message: 'Server error'});
+    }
+}
+async function GetOwnerAvrage(domainModel, res) {
+    try {
+        const domains = await domainModel.getOwnersAvrage();
+        res.json(domains);
+    } catch (error) {
+        console.error('Error fetching Owners:', error);
+        res.status(500).json({message: 'Server error'});
+    }
+}
+async function GetOwnersCount(domainModel, res) {
+    try {
+        const domains = await domainModel.getOwnersCount();
+        res.json(domains);
+    } catch (error) {
+        console.error('Error fetching Owners:', error);
         res.status(500).json({message: 'Server error'});
     }
 }
